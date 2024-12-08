@@ -84,15 +84,15 @@ const part2SolveDiff = diffString(
 let outputText = `# Day ${day} statistics:\n\n`;
 outputText += `Input Downloaded: ${inputFileDownloaded.toLocaleString('en-US', {
     timeZone: 'America/New_York',
-})}\n`;
+})}\\\n`;
 outputText += `Part 1 submitted: ${part1SolveTime.toLocaleString('en-US', {
     timeZone: 'America/New_York',
-})} ${part1SolveDiff}\n`;
+})} ${part1SolveDiff}\\\n`;
 outputText += `Part 2 submitted: ${part2SolveTime.toLocaleString('en-US', {
     timeZone: 'America/New_York',
 })} ${part2SolveDiff}\n\n`;
 
-outputText += `Part 1 Rank: ${todayData.groups.part1Rank} (${todayData.groups.part1Score} points)\n`;
+outputText += `Part 1 Rank: ${todayData.groups.part1Rank} (${todayData.groups.part1Score} points)\\\n`;
 outputText += `Part 2 Rank: ${todayData.groups.part2Rank} (${todayData.groups.part2Score} points)\n\n`;
 
 outputText += `*Note that as of 2024 Day 8, input download happens automatically when I first run the part 1 template file. I do this immediately after opening the puzzle for the first time.*`;
