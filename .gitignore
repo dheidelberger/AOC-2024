@@ -133,3 +133,5 @@ dist
 api.json
 input*.txt
 testinput*.txt
+
+.DS_Store
