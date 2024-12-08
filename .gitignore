@@ -133,5 +133,6 @@ dist
 api.json
 input*.txt
 testinput*.txt
+leaderboard*.txt
 
 .DS_Store
