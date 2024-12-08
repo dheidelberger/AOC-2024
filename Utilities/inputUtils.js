@@ -4,8 +4,8 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
-const YEAR = '2024';
-const userString =
+export const YEAR = '2024';
+export const USER_STRING =
     'https://github.com/dheidelberger/AOC-2024 by david.heidelberger@gmail.com';
 
 //When you open the problem for the day, copy the sample data.
@@ -22,7 +22,14 @@ function writeTestData(dir, testInputFile) {
             console.log('Done');
         }
     }
-    // console.log(process.env.cookie);
+}
+
+export async function downloadFromAOC(url, cookie) {
+    const response = await fetch(url, {
+        headers: { 'User-Agent': USER_STRING, cookie: cookie },
+    });
+    const body = await response.text();
+    return body;
 }
 
 async function downloadInput(dir, day) {
@@ -30,10 +37,7 @@ async function downloadInput(dir, day) {
     const inputURL = `https://adventofcode.com/2024/day/${day}/input`;
     if (!fs.existsSync(inputPath)) {
         console.log('Downloading input');
-        const response = await fetch(inputURL, {
-            headers: { 'User-Agent': userString, cookie: process.env.cookie },
-        });
-        const body = await response.text();
+        const body = await downloadFromAOC(inputURL, process.env.cookie);
         console.log(body);
         fs.writeFileSync(inputPath, body);
     }
