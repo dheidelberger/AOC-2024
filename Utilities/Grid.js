@@ -19,6 +19,7 @@ class Cell {
         this.column = column;
         this.grid = grid;
         this.outOfBounds = isOutOfBounds;
+        this.key = key(row, column);
     }
 
     getCellsInDirections(directions, n = -1, includeSelf = false) {
