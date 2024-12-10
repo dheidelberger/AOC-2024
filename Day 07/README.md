@@ -8,8 +8,3 @@ Part 1 Rank: 22313 (0 points)\
 Part 2 Rank: 20013 (0 points)
 
 _Note that as of 2024 Day 8, input download happens automatically when I first run the part 1 template file. I do this immediately after opening the puzzle for the first time._
-
-Part 1 Run Time: \
-Part 2 Run Time:
-
-_Code is run on a 2020 M1 Macbook Pro with 16GB of RAM_
