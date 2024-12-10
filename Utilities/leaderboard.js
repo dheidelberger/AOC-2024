@@ -95,6 +95,11 @@ outputText += `Part 2 submitted: ${part2SolveTime.toLocaleString('en-US', {
 outputText += `Part 1 Rank: ${todayData.groups.part1Rank} (${todayData.groups.part1Score} points)\\\n`;
 outputText += `Part 2 Rank: ${todayData.groups.part2Rank} (${todayData.groups.part2Score} points)\n\n`;
 
-outputText += `*Note that as of 2024 Day 8, input download happens automatically when I first run the part 1 template file. I do this immediately after opening the puzzle for the first time.*`;
+outputText += `*Note that as of 2024 Day 8, input download happens automatically when I first run the part 1 template file. I do this immediately after opening the puzzle for the first time.*\n\n`;
+outputText += `Part 1 Run Time: \\
+Part 2 Run Time: 
+
+*Code is run on a 2020 M1 Macbook Pro with 16GB of RAM*`;
+
 console.log(outputText);
 fs.writeFileSync(path.join('..', `Day ${day}`, 'README.md'), outputText);
