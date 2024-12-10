@@ -30,8 +30,9 @@ if (!day) {
     console.log('Must have a day argument');
     process.exit(1);
 }
+const paddedDay = `${day}`.padStart(2, '0');
 
-const leaderboardPath = path.join('..', `Day ${day}`, `leaderboard.txt`);
+const leaderboardPath = path.join('..', `Day ${paddedDay}`, `leaderboard.txt`);
 if (!fs.existsSync(leaderboardPath)) {
     console.log('Downloading leaderboard');
     const leaderboardBody = await downloadFromAOC(
@@ -61,7 +62,7 @@ if (todayData.length === 0) {
 
 todayData = todayData[0];
 
-const inputFilePath = path.join('..', `Day ${day}`, 'input.txt');
+const inputFilePath = path.join('..', `Day ${paddedDay}`, 'input.txt');
 const inputFileDownloaded = getFileCreationDate(inputFilePath);
 
 let part1SolveTime = getSubmissionTime(day, todayData.groups.part1Time);
@@ -102,4 +103,4 @@ Part 2 Run Time:
 *Code is run on a 2020 M1 Macbook Pro with 16GB of RAM*`;
 
 console.log(outputText);
-fs.writeFileSync(path.join('..', `Day ${day}`, 'README.md'), outputText);
+fs.writeFileSync(path.join('..', `Day ${paddedDay}`, 'README.md'), outputText);
