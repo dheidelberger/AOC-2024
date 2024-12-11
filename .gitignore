@@ -134,5 +134,6 @@ api.json
 input*.txt
 testinput*.txt
 leaderboard*.txt
+*.elapsed.txt
 
 .DS_Store

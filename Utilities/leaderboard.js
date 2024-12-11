@@ -32,7 +32,8 @@ if (!day) {
 }
 const paddedDay = `${day}`.padStart(2, '0');
 
-const leaderboardPath = path.join('..', `Day ${paddedDay}`, `leaderboard.txt`);
+const dayPath = path.join('..', `Day ${paddedDay}`);
+const leaderboardPath = path.join(dayPath, `leaderboard.txt`);
 if (!fs.existsSync(leaderboardPath)) {
     console.log('Downloading leaderboard');
     const leaderboardBody = await downloadFromAOC(
@@ -97,8 +98,20 @@ outputText += `Part 1 Rank: ${todayData.groups.part1Rank} (${todayData.groups.pa
 outputText += `Part 2 Rank: ${todayData.groups.part2Rank} (${todayData.groups.part2Score} points)\n\n`;
 
 outputText += `*Note that as of 2024 Day 8, input download happens automatically when I first run the part 1 template file. I do this immediately after opening the puzzle for the first time.*\n\n`;
-outputText += `Part 1 Run Time: \\
-Part 2 Run Time: 
+
+const part1TimePath = path.join(dayPath, `part1.js.elapsed.txt`);
+const part2TimePath = path.join(dayPath, `part2.js.elapsed.txt`);
+let part1Time = '';
+let part2Time = '';
+if (fs.existsSync(part1TimePath)) {
+    part1Time = fs.readFileSync(part1TimePath);
+}
+if (fs.existsSync(part2TimePath)) {
+    part2Time = fs.readFileSync(part2TimePath);
+}
+
+outputText += `Part 1 Run Time: ${part1Time}\\
+Part 2 Run Time: ${part2Time} 
 
 *Code is run on a 2020 M1 Macbook Pro with 16GB of RAM*`;
 
