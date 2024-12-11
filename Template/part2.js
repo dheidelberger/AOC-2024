@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 const colors = require('colors');
 const G = require('generatorics');
 const Heap = require('heap');
+const memoize = require('memoizee');
 import * as setUtilities from '../Utilities/setUtilities.js';
 import Grid from '../Utilities/Grid.js';
 import Timer from '../Utilities/Timer.js';
