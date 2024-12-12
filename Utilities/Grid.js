@@ -12,6 +12,10 @@ function key(row, column) {
     return `${row}_${column}`;
 }
 
+function rowColFromKey(key) {
+    return key.split('_').map((val) => +val);
+}
+
 class Cell {
     constructor(value, row, column, grid, isOutOfBounds = false) {
         this.value = value;
@@ -57,8 +61,14 @@ class Cell {
         outString += this.outOfBounds ? ' (out of bounds)' : '';
         return outString;
     }
+    setColor(aColor) {
+        this.color = aColor;
+    }
 
     toString() {
+        if (this.color) {
+            return this.color(`${this.value}`);
+        }
         return `${this.value}`;
     }
 }
@@ -206,6 +216,16 @@ export default class Grid {
             return new Cell(this.defaultChar, r, c, this, true);
         }
         return undefined;
+    }
+
+    getCellWithKey(key) {
+        if (this.grid.has(key)) {
+            return this.grid.get(key);
+        }
+        if (this.returnUndefinedCells) {
+            let [row, col] = rowColFromKey(key);
+            return new Cell(this.defaultChar, row, col, this, true);
+        }
     }
 
     #arrayOfEmptyCells(arraySize, row, col, direction) {
@@ -366,6 +386,9 @@ export default class Grid {
                 let thisKey = key(r, c);
                 let cell = this.grid.get(thisKey);
                 let val = `${cell.value}`;
+                if (cell.color) {
+                    val = cell.color(`${cell.value}`);
+                }
                 val = val.padStart(this.maxInputLength, ' ');
                 rowArray.push(val);
             }
