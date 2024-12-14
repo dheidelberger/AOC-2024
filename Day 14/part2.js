@@ -109,7 +109,7 @@ for (let i = 0; i < 1000000; i++) {
     //     console.log('='.repeat(width));
     // }
 }
-// Found at i: 8,269 - correct answer
+// Found at i: 8,269 - correct answer (need to add 1 though since we're 0 based)
 // Found at i: 18,672
 // Found at i: 29,075
 // Found at i: 39,478
