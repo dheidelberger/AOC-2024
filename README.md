@@ -17,3 +17,8 @@ Specifically:
 -   User agent header is set by [userString](https://github.com/dheidelberger/AOC-2024/blob/302f62c05190e09b0bc12726a66fed1959ccde18/Utilities/inputUtils.js#L8) and refers to myself and to this Readme
 
 Calls to the leaderboard API are, at least for now, manually triggered using the link on the website, with JSON data pasted into a local file. I have no plans to automate this part of the script at present.
+
+#### Install notes:
+
+For m1, need to install some libraries for text-to-image package:\
+`brew install pkg-config cairo pango libpng jpeg giflib librsvg`
