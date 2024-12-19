@@ -1,0 +1,7 @@
+bst 4 - set B to A%8
+bxl 2 - B = B XOR 2
+cdv 5 - C = A/(2^B)
+bxc 5 - B = B XOR C
+adv 3 - A = A/8
+bxl 7 - B = B XOR 7
+out 5 - Output B
