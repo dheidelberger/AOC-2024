@@ -48,9 +48,9 @@ if (!fs.existsSync(leaderboardPath)) {
 const leaderboardText = fs.readFileSync(leaderboardPath, 'utf-8');
 const $ = cheerio.load(leaderboardText);
 const table = $('article').text();
-const scoreData = [
+let scoreData = [
     ...`${table}`.matchAll(
-        /\s*(?<day>\d+)\s*(?<part1Time>\d{2}:\d{2}:\d{2})\s*(?<part1Rank>\d+)\s*(?<part1Score>\d+)\s*(?<part2Time>\d{2}:\d{2}:\d{2})\s*(?<part2Rank>\d+)\s*(?<part2Score>\d+)/g
+        /\s*(?<day>\d+)\s*(?<part1Time>\d{2}:\d{2}:\d{2}|>24h)\s*(?<part1Rank>\d+)\s*(?<part1Score>\d+)\s*(?<part2Time>\d{2}:\d{2}:\d{2}|>24h)\s*(?<part2Rank>\d+)\s*(?<part2Score>\d+)/g
     ),
 ];
 
@@ -66,22 +66,29 @@ todayData = todayData[0];
 const inputFilePath = path.join('..', `Day ${paddedDay}`, 'input.txt');
 const inputFileDownloaded = getFileCreationDate(inputFilePath);
 
-let part1SolveTime = getSubmissionTime(day, todayData.groups.part1Time);
-console.log(
-    part1SolveTime.toLocaleString('en-US', { timeZone: 'America/New_York' })
-);
+let part1SolveTime = '>24h';
+let part1SolveDiff = 'n/a';
+if (!todayData.groups.part1Time.includes('>')) {
+    part1SolveTime = getSubmissionTime(day, todayData.groups.part1Time);
+    console.log(
+        part1SolveTime.toLocaleString('en-US', { timeZone: 'America/New_York' })
+    );
+    part1SolveDiff = diffString(
+        Math.floor((part1SolveTime - inputFileDownloaded) / 1000)
+    );
+}
 
-let part2SolveTime = getSubmissionTime(day, todayData.groups.part2Time);
-console.log(
-    part2SolveTime.toLocaleString('en-US', { timeZone: 'America/New_York' })
-);
-
-const part1SolveDiff = diffString(
-    Math.floor((part1SolveTime - inputFileDownloaded) / 1000)
-);
-const part2SolveDiff = diffString(
-    Math.floor((part2SolveTime - part1SolveTime) / 1000)
-);
+let part2SolveTime = '>24h';
+let part2SolveDiff = 'n/a';
+if (!todayData.groups.part2Time.includes('>')) {
+    part2SolveTime = getSubmissionTime(day, todayData.groups.part2Time);
+    console.log(
+        part2SolveTime.toLocaleString('en-US', { timeZone: 'America/New_York' })
+    );
+    part2SolveDiff = diffString(
+        Math.floor((part2SolveTime - part1SolveTime) / 1000)
+    );
+}
 
 let outputText = `# Day ${day} statistics:\n\n`;
 outputText += `Input Downloaded: ${inputFileDownloaded.toLocaleString('en-US', {
