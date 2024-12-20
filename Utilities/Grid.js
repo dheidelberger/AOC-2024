@@ -16,6 +16,8 @@ function rowColFromKey(key) {
     return key.split('_').map((val) => +val);
 }
 
+// function matchStringOrArray() {}
+
 class Cell {
     constructor(value, row, column, grid, isOutOfBounds = false) {
         this.value = value;
@@ -371,6 +373,68 @@ export default class Grid {
 
     [util.inspect.custom](depth, inspectOptions, inspect) {
         return this.toString();
+    }
+
+    /**
+     * Run Dijkstra's algorithm on the grid
+     * @param {Cell} startCell - The starting cell
+     * @param {Cell} finishCell - The finishing cell
+     * @param {string|any[]} invalidCellValues="#" - Either a string or an array containing cell values for walls. Defaults to "#". If validCellValues is defined, this param is ignored
+     * @return {Cell[]} Array of cells
+     */
+    dijkstra(startCell, finishCell, invalidCellValues = '#') {
+        const sptSet = new Set();
+        let allValidCells = this.getAllCells()
+            .filter((cell) => {
+                if (Array.isArray(invalidCellValues)) {
+                    let valid = invalidCellValues.indexOf(cell.value) === -1;
+                    return valid;
+                }
+                return cell.value !== invalidCellValues;
+            })
+            .map((cell) => {
+                cell.distance = Infinity;
+                return cell;
+            });
+
+        startCell.distance = 0;
+        allValidCells.sort((a, b) => b.distance - a.distance);
+        const targetLength = allValidCells.length;
+
+        while (allValidCells.length > 0) {
+            const current = allValidCells.pop();
+            sptSet.add(current.key);
+            for (const successorCell of current.getCellInDirections(
+                Grid.cardinalDirections
+            )) {
+                let validCell;
+                if (Array.isArray(invalidCellValues)) {
+                    validCell =
+                        invalidCellValues.indexOf(successorCell.value) === -1;
+                } else {
+                    validCell = successorCell.value !== invalidCellValues;
+                }
+                if (!successorCell.outOfBounds && validCell) {
+                    const newDistance = current.distance + 1;
+                    if (newDistance < successorCell.distance) {
+                        successorCell.distance = newDistance;
+                        successorCell.prev = current;
+                    }
+                }
+            }
+            allValidCells.sort((a, b) => b.distance - a.distance);
+        }
+
+        let currentCell = finishCell;
+
+        const cellPath = [];
+        while (currentCell) {
+            cellPath.push(currentCell);
+            currentCell.value = '0';
+            currentCell = currentCell.prev;
+        }
+        cellPath.reverse();
+        return cellPath;
     }
 
     toString() {
