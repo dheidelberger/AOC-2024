@@ -135,5 +135,6 @@ input*.txt
 testinput*.txt
 leaderboard*.txt
 *.elapsed.txt
+*part2PossibleSolutions.json
 
 .DS_Store
